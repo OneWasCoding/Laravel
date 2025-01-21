@@ -10,7 +10,7 @@
                     <th scope="col">Album title</th>
                     <th scope="col">Genre</th>
                     <th scope="col">Date Released</th>
-                    <th scope="col">album</th>
+                    <th scope="col">artist id</th>
                     <th scope="col">Action</th>
                 </tr>
             </thead>
