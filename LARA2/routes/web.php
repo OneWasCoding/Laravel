@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ArtistController;
 use App\Http\Controllers\AlbumController;
+use App\Http\Controllers\UserController;
 use PHPUnit\TextUI\Configuration\Php;
 
 /*
@@ -38,13 +39,13 @@ Route::get('/', function () {
 // Route::get('/first', function () {
 
 //     // return Redirect::to('/my/long/calendar/route');
-//     return redirect::route('calendar');
+//     return Redirect::route('calendar');
 // });
 
 
-// Route::get('/second', function () {
-//     return 'Second route.';
-// });
+Route::get('/second', function () {
+    return 'Second route.';
+});
 
 // Route::get('file/download', function () {
 //     $file = 'C:\Users\rommel dalisay\Desktop\2T-2025-att.txt';
@@ -95,4 +96,6 @@ Route::prefix('artists')->group(function () {
     
 });
 
-Route::resource('albums', AlbumController::class);  
+Route::resource('albums', AlbumController::class);
+Route::view('/register', 'user.register');
+Route::post('/user/register', [UserController::class, 'register'])->name('user.register'); 

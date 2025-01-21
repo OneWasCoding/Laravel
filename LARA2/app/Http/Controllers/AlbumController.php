@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Artist;
 use App\Models\Album;
+use Illuminate\Support\Facades\DB;
+
 
 class AlbumController extends Controller
 {
@@ -13,7 +15,12 @@ class AlbumController extends Controller
      */
     public function index()
     {
-        $albums = Album::all();
+        // $albums = Album::all();
+        $albums = DB::table('albums AS al')
+            ->join('artists AS ar', 'al.artist_id', '=', 'ar.id')
+            ->select('al.id as album_id','al.title', 'al.genre', 'al.date_released', 'ar.name')
+            ->get();
+            // dd($albums);
         return view('album.index', compact('albums'));
     }
 
@@ -92,6 +99,8 @@ class AlbumController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        Album::destroy($id);
+        return redirect()->route('albums.index');
+
     }
 }
