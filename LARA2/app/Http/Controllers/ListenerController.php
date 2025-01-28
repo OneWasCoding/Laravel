@@ -13,12 +13,12 @@ class ListenerController extends Controller
      */
     public function index()
     {
-        // $listeners = Listener::all();
-        $listeners = DB::table('users AS u')
-            ->join('listeners AS l', 'u.id', '=', 'l.user_id')
-            ->orderBy('l.lname')
-            ->select('l.id', 'l.fname', 'l.lname', 'u.email', 'l.address', 'img_path')
-            ->get();
+        $listeners = Listener::withTrashed()->get();
+        // $listeners = DB::table('users AS u')
+        //     ->join('listeners AS l', 'u.id', '=', 'l.user_id')
+        //     ->orderBy('l.lname')
+        //     ->select('l.id', 'l.fname', 'l.lname', 'u.email', 'l.address', 'img_path')
+        //     ->get();
         // dd($listeners);
         return view('listener.index', compact('listeners'));
     }
@@ -52,7 +52,9 @@ class ListenerController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $listener = Listener::find($id);
+
+        dd($listener);
     }
 
     /**
@@ -68,6 +70,15 @@ class ListenerController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        Listener::destroy($id);
+        return redirect()->route('listeners.index');
+    }
+
+    public function restore($id) {
+        $listener = Listener::withTrashed()->find($id)->restore();
+        // dd($listener);
+        // $listener->restore();
+        
+        return redirect()->route('listeners.index');
     }
 }
