@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ArtistController;
 use App\Http\Controllers\AlbumController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ListenerController;
 
 
 /*
@@ -36,11 +37,11 @@ Route::get('/', function () {
 //     return "Books in the {$genre} category.";
 // });
 
-// Route::get('/first', function () {
+Route::get('/first', function () {
 
-//     // return Redirect::to('/my/long/calendar/route');
-//     return Redirect::route('calendar');
-// });
+    // return Redirect::to('/my/long/calendar/route');
+    return Redirect::route('calendar');
+});
 
 
 Route::get('/second', function () {
@@ -100,3 +101,4 @@ Route::resource('albums', AlbumController::class);
 Route::view('/register', 'user.register');
 Route::post('/user/register', [UserController::class, 'register'])->name('user.register'); 
 Route::get('/user/profile', [UserController::class, 'profile'])->name('user.profile'); 
+Route::resource('listeners', ListenerController::class);

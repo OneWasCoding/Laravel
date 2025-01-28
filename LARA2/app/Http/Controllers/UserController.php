@@ -52,20 +52,35 @@ class UserController extends Controller
         $path = Storage::putFileAs(
             'public/images', $request->file('img_path'), $request->file('img_path')->hashName()
         );
-        $user = new User();
-        $user->name = $request->fname . " " . $request->lname;
-        $user->email = $request->email;
-        $user->password = Hash::make($request->password);
-        $user->save();
+        // $user = new User();
+        // $user->name = $request->fname . " " . $request->lname;
+        // $user->email = $request->email;
+        // $user->password = Hash::make($request->password);
+        // $user->save();
+
+        $user = User::create([
+            'name' => $request->fname . " " . $request->lname,
+            'email' => $request->email,
+            'password' => Hash::make($request->password)
+        ]);
         
-        $listener = new Listener();
-        $listener->fname = $request->fname;
-        $listener->lname = $request->lname;
-        $listener->address = $request->address;
-        $listener->img_path = $path;
-        $listener->user_id = $user->id;
-        $listener->save();
+        // $listener = new Listener();
+        // $listener->fname = $request->fname;
+        // $listener->lname = $request->lname;
+        // $listener->address = $request->address;
+        // $listener->img_path = $path;
+        // $listener->user_id = $user->id;
+        // $listener->save();
         // dd($user, $listener);
+
+        $listener = Listener::create([
+            'fname' => $request->fname,
+            'lname' => $request->lname,
+            'address' => $request->address,
+            'img_path' => $path,
+            'user_id' => $user->id
+
+        ]);
         Auth::login($user);
         return redirect()->route('user.profile');
     }
